@@ -6,6 +6,7 @@ Testy standardu FIPS 140-2
 
 import math
 import random
+import sympy
 
 def relatively_prime_integers(n, limit):
     if n <= 0 or limit <= 0:
@@ -22,11 +23,13 @@ def main():
     x_table = [20000]
     bits = ""
 
-    kp = 100379
-    p = 4*kp + 3
+    kp = sympy.randprime(100000, 1000000)
+    p = 4 * kp + 3
 
-    kq = 102023
-    q = 4*kq + 3
+    kq = sympy.randprime(100000, 1000000)
+    q = 4 * kq + 3
+
+    # print(kp,kq)
 
     N = p*q
 
