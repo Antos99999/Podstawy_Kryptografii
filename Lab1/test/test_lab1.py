@@ -5,9 +5,7 @@ Testy standardu FIPS 140-2
 '''
 
 import unittest
-
-from pyexpat.errors import messages
-
+import math
 from lab1 import main
 
 class test_lab1(unittest.TestCase):
@@ -79,6 +77,59 @@ class test_lab1(unittest.TestCase):
 
     def test_poker(self):
         bits = main()
+        character = [bits[i:i+4] for i in range(0, len(bits), 4)]
+
+        #print(character)
+
+        variant = {
+            '0': 0,
+            '1': 0,
+            '2': 0,
+            '3': 0,
+            '4': 0,
+            '5': 0,
+            '6': 0,
+            '7': 0,
+            '8': 0,
+            '9': 0,
+            '10': 0,
+            '11': 0,
+            '12': 0,
+            '13': 0,
+            '14': 0,
+            '15': 0,
+        }
+
+        variant['0'] += character.count('0000')
+        variant['1'] += character.count('0001')
+        variant['2'] += character.count('0010')
+        variant['3'] += character.count('0011')
+        variant['4'] += character.count('0100')
+        variant['5'] += character.count('0101')
+        variant['6'] += character.count('0110')
+        variant['7'] += character.count('0111')
+        variant['8'] += character.count('1000')
+        variant['9'] += character.count('1001')
+        variant['10'] += character.count('1010')
+        variant['11'] += character.count('1011')
+        variant['12'] += character.count('1100')
+        variant['13'] += character.count('1101')
+        variant['14'] += character.count('1110')
+        variant['15'] += character.count('1111')
+
+        #print(variant)
+
+        suma = 0
+
+        for i in variant:
+            #print(i)
+            suma += math.pow(variant[str(i)],2)
+
+        x = (16/5000) * suma - 5000
+
+        #print(x)
+
+        self.assertTrue(2.16<=x<=46.17, "Wartość X: " + str(x))
 
 if __name__ == "__main__":
     unittest.main()
