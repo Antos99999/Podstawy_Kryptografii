@@ -5,6 +5,9 @@ Testy standardu FIPS 140-2
 '''
 
 import unittest
+
+from pyexpat.errors import messages
+
 from lab1 import main
 
 class test_lab1(unittest.TestCase):
@@ -67,14 +70,12 @@ class test_lab1(unittest.TestCase):
         else:
             series_counts[series] += 1
 
-        print(series_counts)
-
-        self.assertTrue(2315 <= series_counts[1] <= 2685)
-        self.assertTrue(1114 <= series_counts[2] <= 1386)
-        self.assertTrue(527 <= series_counts[3] <= 723)
-        self.assertTrue(240 <= series_counts[4] <= 384)
-        self.assertTrue(103 <= series_counts[5] <= 209)
-        self.assertTrue(103 <= series_counts['6+'] <= 209)
+        self.assertTrue(2315 <= series_counts[1] <= 2685, "Seria 1 wynosi: " + str(series_counts[1]))
+        self.assertTrue(1114 <= series_counts[2] <= 1386, "Seria 2 wynosi: " + str(series_counts[2]))
+        self.assertTrue(527 <= series_counts[3] <= 723, "Seria 3 wynosi: " + str(series_counts[3]))
+        self.assertTrue(240 <= series_counts[4] <= 384, "Seria 4 wynosi: " + str(series_counts[4]))
+        self.assertTrue(103 <= series_counts[5] <= 209, "Seria 5 wynosi: " + str(series_counts[5]))
+        self.assertTrue(103 <= series_counts['6+'] <= 209, "Seria 6+ wynosi: " + str(series_counts['6+']))
 
     def test_poker(self):
         bits = main()

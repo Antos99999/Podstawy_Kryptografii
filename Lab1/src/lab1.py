@@ -7,6 +7,12 @@ Testy standardu FIPS 140-2
 import math
 import random
 import sympy
+from sympy import isprime
+
+def find_primes():
+    primes = [p for p in range(1001, 10000, 2) if isprime(p) and p % 4 == 3]
+    return primes
+
 
 def relatively_prime_integers(n, limit):
     if n <= 0 or limit <= 0:
@@ -20,22 +26,25 @@ def relatively_prime_integers(n, limit):
     return relatively_prime_numbers
 
 def main():
+    prime_list = find_primes()
+    #print(prime_list)
+
     x_table = [20000]
     bits = ""
 
-    kp = sympy.randprime(100000, 1000000)
-    p = 4 * kp + 3
+    p = random.choice(prime_list)
+    #p = 4 * kp + 3
 
-    kq = sympy.randprime(100000, 1000000)
-    q = 4 * kq + 3
+    q = random.choice(prime_list)
+    #q = 4 * kq + 3
 
-    # print(kp,kq)
+    #print(p,q)
 
     N = p*q
 
     #print(N)
 
-    relatively_prime = relatively_prime_integers(N,limit=10000000)
+    relatively_prime = relatively_prime_integers(N,limit=9999)
 
     x = random.choice(relatively_prime)
     #print(x)
