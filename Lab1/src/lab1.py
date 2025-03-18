@@ -29,12 +29,14 @@ def main():
     prime_list = find_primes()
     #print(prime_list)
 
-    x_table = [20000]
+    x_table = []
     bits = ""
 
+    #p = 5167
     p = random.choice(prime_list)
     #p = 4 * kp + 3
 
+    #q = 6863
     q = random.choice(prime_list)
     #q = 4 * kq + 3
 
@@ -49,8 +51,8 @@ def main():
     x = random.choice(relatively_prime)
     #print(x)
 
-    x_table[0] = math.pow(x,2) % N
-    #print(x0)
+    x_table.append(math.pow(x,2) % N)
+    #print(x_table[0])
 
     for i in range(20000):
         x_table.append(math.pow(x_table[i],2) % N)
