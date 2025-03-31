@@ -10,10 +10,16 @@ def find_primes():
     primes = [p for p in range(1001, 10000, 2) if isprime(p)]
     return primes
 
+
 def find_primitive_root(n):
-    factors = list(primerange(2, n-1))
+    factors = list(primerange(2, n - 1))
     for g in range(2, n):
-        if all(pow(g, (n-1)//factor, n) != 1 for factor in factors):
+        is_primitive_root = True
+        for factor in factors:
+            if pow(g, (n - 1) // factor, n) == 1:
+                is_primitive_root = False
+                break
+        if is_primitive_root:
             return g
     return None
 
