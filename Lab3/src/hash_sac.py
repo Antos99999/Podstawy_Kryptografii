@@ -28,7 +28,7 @@ def main():
 
     ones = xor.count("1")
 
-    print(f"Counted ones {ones}")
+    print(f"Counted ones: {ones}")
     print(f"Percentage of changes: {(ones/512)*100}%")
 
 
