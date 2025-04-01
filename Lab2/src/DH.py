@@ -36,6 +36,7 @@ def B(g,n):
     y = random.randint(1, 9999)
     Y = pow(g, y, n)
     return y, Y
+
 def B_k(x,Y,n):
     k = pow(Y, x, n)
     return k
@@ -55,7 +56,7 @@ def main():
     y, Y = B(g,n)
 
     kA = A_k(x,Y,n)
-    kB = B_k(x,Y,n)
+    kB = B_k(y,X,n)
 
     print(f"Klucz k: {kA} oraz {kB}")
 
