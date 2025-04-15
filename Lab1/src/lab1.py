@@ -25,7 +25,7 @@ def relatively_prime_integers(n, limit):
 
     return relatively_prime_numbers
 
-def main():
+def main(bits_numb):
     prime_list = find_primes()
     #print(prime_list)
 
@@ -54,7 +54,7 @@ def main():
     x_table.append(math.pow(x,2) % N)
     #print(x_table[0])
 
-    for i in range(20000):
+    for i in range(bits_numb):
         x_table.append(math.pow(x_table[i],2) % N)
         #print(x_table[i+1])
 
@@ -68,4 +68,5 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    bits_numb = input("Podaj ile bitów chcesz wygenerować: ")
+    main(int(bits_numb))
