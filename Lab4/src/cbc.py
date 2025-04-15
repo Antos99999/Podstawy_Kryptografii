@@ -1,5 +1,6 @@
 from Crypto.Cipher import AES
-from Crypto.Util.Padding import pad
+from Crypto.Util.Padding import pad, unpad
+
 import lab1
 
 def xor_bytes(block1, block2):
@@ -26,7 +27,8 @@ def main(key_length):
     print(f"Zaszyfrowana wiadomość: {ciphertext.hex()}")
 
     decipher = AES.new(key, AES.MODE_CBC, iv)
-    plaintext = decipher.decrypt(ciphertext)
+    #unpad(cipher_decrypt.decrypt(ciphertext), AES.block_size)
+    plaintext = unpad(decipher.decrypt(ciphertext),AES.block_size)
     print(f"Odszyfrowana wiadomość: {plaintext}")
 
 if __name__ == "__main__":
