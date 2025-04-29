@@ -72,9 +72,9 @@ def odtworzenie_sekretu(udzialy,p):
     print(f"Sekret po odtworzeniu: {int(suma)}")
 
 if __name__ == '__main__':
-    #n = int(input("Podaj n: "))
-    #t = int(input("Podaj t: "))
-    #trywailny(n,t)
+    n = int(input("Podaj n: "))
+    t = int(input("Podaj t: "))
+    trywailny(n,t)
     n = int(input("Podaj n: "))
     t = int(input("Podaj t: "))
     shamir(n,t)
