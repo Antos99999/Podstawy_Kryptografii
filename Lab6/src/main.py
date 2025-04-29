@@ -24,7 +24,7 @@ def trywailny(n,t):
     print(f"Sekret po odtworzeniu: {sekret_po_odtworzeniu}")
 
 def shamir(n,t):
-    if n <= t:
+    if t > n:
         print("T musi byc mniejsze lub rowne n")
         return
     a = []
