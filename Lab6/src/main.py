@@ -28,48 +28,53 @@ def shamir(n,t):
         print("T musi byc mniejsze lub rowne n")
         return
     a = []
-    primary_p = sympy.randprime(n,100)
-    sekret = s = random.randint(0,primary_p)
+    s = random.randint(0, 100)
+    min_p=max(s,n)
+    primary_p = sympy.randprime(min_p,min_p*2)
+    print(f"Primary p: {primary_p}")
 
-    print(f"Sekret: {sekret}")
+    print(f"Sekret: {s}")
 
     for i in range(t-1):
-        a.append(random.randint(0,100000000))
+        a.append(random.randint(0, primary_p-1))
+
+    a = [s] + a
 
     udzialy = []
-    suma = 0
-    for i in range(n):
-        x=i
-        for j in range(1, t):
-            suma += a[j - 1] * (x ** j)
-        s_i = (s + suma) % primary_p
-        udzialy.append([i,s_i])
+    for i in range(1, n + 1):
+        si = 0
+        x = i
+        for j in range(t):
+            si = (si + a[j] * ((x ** j) % primary_p))
+        udzialy.append((i, si))
 
     print(f"Udzialy: {udzialy}")
 
-    #Odtworzenie sekretu
-    suma = 0
-    lagrange = 1
-    t = len(udzialy)
+    udzialy_do_odtworzenia = random.sample(udzialy,t)
+    odtworzenie_sekretu(udzialy_do_odtworzenia,primary_p)
 
+
+def odtworzenie_sekretu(udzialy,p):
+    print(f"Udzialy do odtworzenia: {udzialy}")
+    suma = 0
     for i in range(t):
         xi, si = udzialy[i]
-        licznik = 1
-        mianownik = 1
+        lagrange = 1
         for j in range(t):
             if i != j:
                 xj, _ = udzialy[j]
-                licznik = (licznik * (0 - xj))
-                mianownik = (mianownik * (xi - xj))
-        lagrange = ((licznik/mianownik) % primary_p) * lagrange
-        suma = (suma + si * lagrange) % primary_p
+                licznik = (-xj) % p
+                mianownik = (xi - xj) % p
+                odwrotnosc = pow(mianownik, -1, p)
+                lagrange = (lagrange * odwrotnosc * licznik) % p
+        suma = (suma + si * lagrange) % p
 
     print(f"Sekret po odtworzeniu: {int(suma)}")
 
 if __name__ == '__main__':
-    n = int(input("Podaj n: "))
-    t = int(input("Podaj t: "))
-    trywailny(n,t)
+    #n = int(input("Podaj n: "))
+    #t = int(input("Podaj t: "))
+    #trywailny(n,t)
     n = int(input("Podaj n: "))
     t = int(input("Podaj t: "))
     shamir(n,t)
