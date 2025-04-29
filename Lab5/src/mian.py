@@ -44,7 +44,7 @@ def zloz_udziały(udzial1_path, udzial2_path):
     udzial1_np = np.array(udzial1).astype(np.uint8) // 255
     udzial2_np = np.array(udzial2).astype(np.uint8) // 255
 
-    wynik_np = udzial1_np | udzial2_np  # logiczne AND
+    wynik_np = udzial1_np | udzial2_np  # logiczne AND lub OR
     wynik_img = Image.fromarray((1 - wynik_np) * 255, 'L')
 
     wynik_img.save("wynik.png")
