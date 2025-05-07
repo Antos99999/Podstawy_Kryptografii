@@ -19,15 +19,26 @@ class KeyedPRNG:
 
 
 def encoding(d,n,region_size,key):
-    img = Image.open("../resources/images(1).jpg").convert('RGB')
+    img = Image.open("../resources/image1.jpg").convert('RGB')
     px = img.load()
     prng = KeyedPRNG(key)
     picked_area = []
+    brightnesses = []
+    brightnes = 0
 
-    for i in range(n):
+    for i in range(n+1):
         x = prng.randint(0, img.size[0] - region_size)
         y = prng.randint(0, img.size[1] - region_size)
         picked_area.append((x, y))
+
+    for i in range(n):
+        brightness = average_brightness(px, picked_area[i][0], picked_area[i][1], region_size)
+        brightnesses.append(brightness)
+
+    for i in range(n):
+        if i+1 < len(brightnesses):
+            brightnes += (brightnesses[i] - brightnesses[i+1])
+    print(f"Jasność: {float(int(brightnes))}")
 
     #print(picked_area)
     original_brightness = []
@@ -60,17 +71,26 @@ def encoding(d,n,region_size,key):
                 original_brightness.append(brightness_after / count)
 
     img.save("../resources/image_wodny.jpg")
-    img.show()
+    #img.show()
+    img = Image.open("../resources/image_wodny.jpg").convert('RGB')
+    px = img.load()
 
     # Sprawdzanie S'n zgodnie ze wzorem:
     sum1 = 0
     sum2 = 2 * d * n
+    tmp = 0
+
+    for i in range(n):
+        brightness = average_brightness(px, picked_area[i][0], picked_area[i][1], region_size)
+        brightnesses.append(brightness)
+
     for i in range(0,n):
-        if i+1 < len(original_brightness):
-            sum1 += ((original_brightness[i]+d) - (original_brightness[i+1]-d))
-            sum2 += (original_brightness[i] - original_brightness[i+1])
-    print(f"S1 = {sum1}")
-    print(f"S2 = {sum2}")
+        if i+1 < len(brightnesses):
+            sum1 += ((brightnesses[i]+d) - (brightnesses[i+1]-d))
+            tmp += (brightnesses[i] - brightnesses[i+1])
+    sum2 = sum2 + tmp
+
+    #print(f"Jasość po nałożeniu znaku wodnego = {sum2}")
 
 def average_brightness(px, x_start, y_start, region_size):
     total_brightness = 0
@@ -99,7 +119,6 @@ def decoding(d,n,region_size,key):
         picked_area.append((x, y))
 
     brightnesses = []
-    detection1 = 0
     detection2 = 0
     #print(picked_area)
     for i in range(n):
@@ -108,10 +127,8 @@ def decoding(d,n,region_size,key):
 
     for i in range(n):
         if i+1 < len(brightnesses):
-            detection1 += ((brightnesses[i]+d-d) - (brightnesses[i+1]-d+d))
             detection2 += (brightnesses[i] - brightnesses[i+1])
-    print(f"D1 = {detection1}")
-    print(f"D2 = {detection2}")
+    print(f"Jasność przy sprawdzaniu znaku wodnego = {detection2}")
 
 if __name__ == '__main__':
     key = "Tajny Klucz"
@@ -119,4 +136,4 @@ if __name__ == '__main__':
     n = 17
     region_size = 10
     encoding(d,n,region_size,key)
-    decoding(d,n,region_size,key)
+    decoding(d,n,region_size,key="test")
